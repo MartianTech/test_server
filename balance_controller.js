@@ -1,5 +1,4 @@
-request = require('request');
-config = require('./config.json');
+send_request = require('./engine_request_utils')();
 host = config['host'];
 
 exports.index = function(req, res) {
@@ -8,11 +7,8 @@ exports.index = function(req, res) {
 
 exports.query = function(req, res) {
 	var user_id = Number(req.query['user_id']);
-	var postdata = JSON.stringify({id: 1, method: "balance.query", params: [user_id]});
-	console.log('data:' + postdata);
-	request.post(host, {body: postdata}, (err, response) => {
-		response_data = JSON.parse(response["body"]);
-		res.send(response_data);
+	send_request("balance.query", [user_id], (data) => {
+		res.send(data);
 	});
 };
 
@@ -23,11 +19,9 @@ exports.update = function(req, res) {
 	var business_id = req.body['business_id'];
 	var change = req.body['change'];
 	var params = [user_id, asset, type, business_id, change, {}];
-	var postdata = JSON.stringify({id: 1, method: "balance.update", params:params})
-	console.log('data:' + postdata);
-	request.post(host, {body: postdata}, (err, response) => {
-		response_data = JSON.parse(response["body"]);
-		res.send(response_data);
+
+	send_request("balance.update", params, (data) => {
+		res.send(data);
 	});
 };
 
