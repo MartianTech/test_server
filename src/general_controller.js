@@ -14,16 +14,16 @@ exports.asset_summary = function(req, res) {
 	send_request("asset.summary", [], (data) => {
 		res.send(data);
 	});
-}
+};
 
 exports.market_list = function(req, res) {
 	send_request("market.list", [], (data) => {
 		res.send(data);
 	});
-}
+};
 
 exports.market_summary = function(req, res) {
 	send_request("market.summary", [], (data) => {
-		res.send(response_data);
+		res.send(data);
 	});
 };
